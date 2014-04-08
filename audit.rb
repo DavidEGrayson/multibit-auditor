@@ -20,8 +20,8 @@ end
 def base58_encode(number)
   result = ''
   while number > 0
-    result += Base58Chars[number % 58]
-    number /= 58
+    number, remainder = number.divmod 58
+    result += Base58Chars[remainder]
   end
   result.reverse
 end
@@ -64,7 +64,8 @@ def bitcoin_address(public_key, compression)
   base58check_encode("\x00", hash)
 end
 
-# Print out the bitcoin address corresponding to this private key.
+# Print out the bitcoin address corresponding to this private key, assuming that
+# the *compressed* version of the public key was used to make the address.
 def inspect_private_key(private_key)
   public_key = ECDSA::Group::Secp256k1.generator.multiply_by_scalar private_key
   puts bitcoin_address public_key, true
