@@ -30,7 +30,7 @@ Usage
         ruby audit.rb <path to exported private key file>
 
 
-This program prints out the bitcoin addresses corresponding to the private keys in the file.
+This program prints out the Bitcoin addresses corresponding to the private keys in the file.
 
 
 Possible future improvements
