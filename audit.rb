@@ -33,7 +33,7 @@ end
 def base58check_decode(string)
   bignum = base58_decode string  
   str = ECDSA::Format::IntegerOctetString.encode(bignum, 38)
-  puts "Private key stuff: " + str.hex_inspect
+  #puts "Private key stuff: " + str.hex_inspect
   version = str[0]
   payload = str[1, str.size - 5]
   if version.ord != 0x80
@@ -62,8 +62,8 @@ def private_key_decode(string)
   ECDSA::Format::IntegerOctetString.decode(data)
 end
 
-def bitcoin_address(public_key)
-  string = ECDSA::Format::PointOctetString.encode(public_key, compression: true)
+def bitcoin_address(public_key, compression)
+  string = ECDSA::Format::PointOctetString.encode(public_key, compression: compression)
   hash = Digest::RMD160.digest Digest::SHA256.digest string
   # Should it be "\x00", "\x01", or "\x05"?
   base58check_encode("\x00", hash)
@@ -71,7 +71,8 @@ end
 
 def inspect_private_key(private_key)
   public_key = ECDSA::Group::Secp256k1.generator.multiply_by_scalar private_key
-  p bitcoin_address public_key
+  p bitcoin_address public_key, true
+  #p bitcoin_address public_key, false
   puts
 end
 
