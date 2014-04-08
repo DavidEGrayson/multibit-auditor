@@ -10,7 +10,10 @@ Installation
 
 1. Install [Ruby](http://www.ruby-lang.org/).
 2. Download this repository or clone it to your computer using git.
-3. Run the following command to install the ecdsa gem: `gem install ecdsa`
+3. Run the following command to install the ecdsa gem:
+        
+        gem install ecdsa
+        
 4. The ecdsa gem is served from [Rubygems.org](http://rubygems.org).  In case
    the server or your connection to it has been compromised, you might want to
    briefly scan over the Ruby code for the gem.  It will be in a "gems"
@@ -23,7 +26,9 @@ Usage
 2. Select "Do not password protect export file".
 3. Click "Export Private Keys".
 4. Run the following command:
-     ruby audit.rb <path to exported private key file>
+        
+        ruby audit.rb <path to exported private key file>
+
 
 This program prints out the bitcoin addresses corresponding to the private keys in the file.
 
