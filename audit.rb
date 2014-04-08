@@ -33,7 +33,6 @@ end
 def base58check_decode(string)
   bignum = base58_decode string  
   str = ECDSA::Format::IntegerOctetString.encode(bignum, 38)
-  #puts "Private key stuff: " + str.hex_inspect
   version = str[0]
   payload = str[1, str.size - 5]
   if version.ord != 0x80
@@ -54,10 +53,7 @@ end
 def private_key_decode(string)
   data = base58check_decode string
   data.force_encoding('binary')
-  data = data[0, data.size - 1]
-  #data.chomp!("\x01")
-  #puts "Private key: " + data.hex_inspect
-  #data.reverse!  # maybe needed
+  data = data[0, data.size - 1]  # remove trailing "\x01" byte, not sure why it is there
   raise "Expected private key to be 32 bytes." if data.size != 32
   ECDSA::Format::IntegerOctetString.decode(data)
 end
@@ -65,18 +61,14 @@ end
 def bitcoin_address(public_key, compression)
   string = ECDSA::Format::PointOctetString.encode(public_key, compression: compression)
   hash = Digest::RMD160.digest Digest::SHA256.digest string
-  # Should it be "\x00", "\x01", or "\x05"?
   base58check_encode("\x00", hash)
 end
 
+# Print out the bitcoin address corresponding to this private key.
 def inspect_private_key(private_key)
   public_key = ECDSA::Group::Secp256k1.generator.multiply_by_scalar private_key
-  p bitcoin_address public_key, true
-  #p bitcoin_address public_key, false
-  puts
+  puts bitcoin_address public_key, true
 end
-
-# p inspect_private_key 0x18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725
 
 ARGF.each do |line|
   next if line.match(/\A\s*#/)              # filter out comments
