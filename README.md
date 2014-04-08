@@ -10,12 +10,11 @@ Installation
 
 1. Install [Ruby](http://www.ruby-lang.org/).
 2. Download this repository or clone it to your computer using git.
-3. Run the following command to install the ECDSA gem:
-      gem install ecdsa
-4. The ecdsa gem is served from rubygems.org.  In case the server or your
-   connection to it has been compromised, you might want to briefly scan over
-   the Ruby code for the gem.  It will be in a "gems" directory somewhere on
-   your computer.
+3. Run the following command to install the ecdsa gem: `gem install ecdsa`
+4. The ecdsa gem is served from [Rubygems.org](http://rubygems.org).  In case
+   the server or your connection to it has been compromised, you might want to
+   briefly scan over the Ruby code for the gem.  It will be in a "gems"
+   directory somewhere on your computer.
 
 Usage
 ====
